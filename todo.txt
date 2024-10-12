@@ -1,0 +1,24 @@
+1)Logger с возможностью сздания производных для модулей и трассировкой (надстройка над log.Logger)
+
+parentLogger := mylogger.New("[CORE]")
+parentLogger.Printf("Sraka\n") -> [CORE] Sraka
+
+requestLogger := parentLogger.Derive("[REQUEST]")
+requestLogger.Printf("Sraka\n") -> [CORE][REQUEST] Sraka
+
+2)Унифицированный конфиг (общий интерфейс):
+    Написать парсер конфига env (высший приоритет)
+    "REDIS_ADDR": "sraka.xuy"
+
+    Написать парсер генеренного конфига (низший приоритет)
+    Redis: {
+        Enabled: true,
+        Addr: "localhost:1337"
+    }
+
+3)
+Написать билдер (.Configure) для приложения
+Написать чейнер для миддлвар ( next(ctx) )
+
+4 интерфейса
+5 имплементаций
