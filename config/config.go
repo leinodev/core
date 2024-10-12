@@ -1,4 +1,4 @@
-package coreconfig
+package config
 
 type CoreConfig struct {
 }

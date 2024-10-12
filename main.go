@@ -1,8 +1,8 @@
 package main
 
 import (
-	"apifika-core/application"
 	"context"
+	"github.com/leinodev/core/internal/application"
 	"os"
 	"os/signal"
 )

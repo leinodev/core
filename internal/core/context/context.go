@@ -1,10 +1,10 @@
-package corecontext
+package context
 
 import (
-	"apifika-core/core/corecontext/auth"
-	"apifika-core/core/corecontext/request"
-	"apifika-core/utils"
 	"context"
+	"github.com/leinodev/core/internal/core/context/auth"
+	"github.com/leinodev/core/internal/core/context/request"
+	"github.com/leinodev/core/pkg/utils"
 	"runtime"
 	"time"
 
