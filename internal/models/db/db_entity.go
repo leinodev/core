@@ -1,4 +1,6 @@
 package db
 
-type db_entity struct {
+type Entity struct {
+	Name   string        `json:"name"`
+	Fields []EntityField `json:"fields"`
 }
