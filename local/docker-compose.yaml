@@ -1,0 +1,32 @@
+version: '3.9'
+name: "leino-core"
+
+services:
+  core:
+    container_name: core
+    build:
+      context: ../
+      dockerfile: local/Dockerfile
+    restart: "unless-stopped"
+    command:
+      - ./service
+    depends_on:
+      postgres:
+        condition: service_started
+    networks:
+      - leino-core
+
+  postgres:
+    container_name: storage-postgres
+    image: postgres:15.6-alpine
+    env_file:
+      - ../local/.env
+    ports:
+      - "${POSTGRES_EXTERNAL_PORT:-5432}:5432"
+    volumes:
+      - "./local/volumes/pg-data:/var/lib/postgresql/data"
+    networks:
+      - leino-core
+
+networks:
+  leino-core:

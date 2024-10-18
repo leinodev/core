@@ -12,6 +12,7 @@ type (
 		// TODO: add configuration for connection according to selected dialect
 	}
 	Schema struct {
+		Name    string      `json:"name"`
 		Tables  []db.Entity `json:"tables"`
 		Indexes []db.Index  `json:"indexes"`
 	}

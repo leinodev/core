@@ -8,8 +8,8 @@ const (
 )
 
 type FieldType struct {
-	Kind  FieldKind `json:"kind"`
-	Type  string    `json:"type,omitempty"`
-	Table string    `json:"table,omitempty"`
-	Field string    `json:"field,omitempty"`
+	Kind FieldKind `json:"kind,omitempty" yaml:"kind"`
+	Type string    `json:"type,omitempty"`
+	//Table string    `json:"table,omitempty"`
+	//Field string    `json:"field,omitempty"`
 }

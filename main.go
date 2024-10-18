@@ -1,29 +1,32 @@
 package main
 
 import (
-	"context"
+	"flag"
+	"fmt"
+	"github.com/leinodev/core/config"
 	"github.com/leinodev/core/internal/application"
-	"os"
-	"os/signal"
 )
 
 func main() {
+	var cfgPath string
+	flag.StringVar(&cfgPath, "c", "./config.yaml", "path to configuration file")
+	flag.Parse()
+	cfg, err := config.NewConfig(cfgPath)
+	panicOnErr(err)
 
-	ctx, cancell := context.WithCancel(context.Background())
+	app := application.New(cfg)
 
-	//Create logger
-
-	//Load config
-
-	app, err := application.New(ctx)
-	if err != nil {
-		//logger.Fatal
+	if err := app.Configure(); err != nil {
+		panicOnErr(fmt.Errorf("cannot configure app: %w", err))
 	}
 
-	app.Run()
+	if err := app.Run(); err != nil {
+		panicOnErr(fmt.Errorf("cannot run app: %w", err))
+	}
+}
 
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Kill)
-	<-ch
-	cancell()
+func panicOnErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

@@ -1,37 +1,42 @@
 package application
 
 import (
-	"context"
-	corecontext "github.com/leinodev/core/internal/core/context"
-	corerequest "github.com/leinodev/core/internal/core/context/request"
+	"fmt"
+	"github.com/leinodev/core/config"
 	"net/http"
-	"time"
 )
 
 type Application struct {
-	ctx context.Context
+	cfg *config.CoreConfig
 }
 
-func New(ctx context.Context) (*Application, error) {
+func New(cfg *config.CoreConfig) *Application {
 	return &Application{
-		ctx: ctx,
-	}, nil
+		cfg: cfg,
+	}
 }
 
-func (h *Application) Run() {
-
+func (app *Application) Configure() error {
+	return nil
 }
 
-func (h *Application) httpHandler(w http.ResponseWriter, r *http.Request) {
-	parent, cancell := context.WithTimeout(h.ctx, time.Minute)
-	defer cancell()
-	ctx := corecontext.CreateContext(parent)
-	ctx.SetRequestContext(&corerequest.Context{
-		HttpContext: &corerequest.HttpContext{
-			R: r,
-			W: w,
-		},
-	})
+func (app *Application) Run() error {
+
+	fmt.Println(app.cfg)
+
+	return nil
+}
+
+func (app *Application) httpHandler(w http.ResponseWriter, r *http.Request) {
+	//parent, cancell := context.WithTimeout(h.ctx, time.Minute)
+	//defer cancell()
+	//ctx := corecontext.CreateContext(parent)
+	//ctx.SetRequestContext(&corerequest.Context{
+	//	HttpContext: &corerequest.HttpContext{
+	//		R: r,
+	//		W: w,
+	//	},
+	//})
 	//next(ctx)
 
 }

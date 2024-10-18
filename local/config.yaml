@@ -1,0 +1,32 @@
+db:
+  connection:
+    dialect: "postgres"
+  schemas:
+    - name: "test_schema"
+      tables:
+        - name: "test_table"
+          fields:
+            - name: "id"
+              type:
+#                kind: "0",
+                type: "SERIAL"
+              tags:
+                - "PRIMARY KEY"
+            - name: "first_name"
+              type:
+#                kind: "FIELD_VALUE",
+                type: "VARCHAR"
+              tags:
+                - "NOT NULL"
+            - name: "last_name"
+              type:
+#                kind: "FIELD_VALUE",
+                type: "VARCHAR"
+              tags:
+                - "NOT NULL"
+            - name: "email"
+              type:
+#                kind: "FIELD_VALUE",
+                type: "VARCHAR"
+              tags:
+                - "UNIQUE NOT NULL"
