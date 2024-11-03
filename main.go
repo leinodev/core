@@ -1,32 +1,37 @@
 package main
 
 import (
-	"flag"
-	"fmt"
+	"context"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/leinodev/core/application"
 	"github.com/leinodev/core/config"
-	"github.com/leinodev/core/internal/application"
 )
 
+var Version string
+
 func main() {
-	var cfgPath string
-	flag.StringVar(&cfgPath, "c", "./config.yaml", "path to configuration file")
-	flag.Parse()
-	cfg, err := config.NewConfig(cfgPath)
-	panicOnErr(err)
-
-	app := application.New(cfg)
-
-	if err := app.Configure(); err != nil {
-		panicOnErr(fmt.Errorf("cannot configure app: %w", err))
-	}
-
-	if err := app.Run(); err != nil {
-		panicOnErr(fmt.Errorf("cannot run app: %w", err))
-	}
-}
-
-func panicOnErr(err error) {
+	launchConfig, err := config.LoadLaunchConfig()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+
+	ctx, cancelFunc := context.WithCancel(context.Background())
+
+	app, err := application.New(ctx, launchConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	app.Start()
+
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
+
+	// Wait for killcode and stop application
+	<-sigCh
+	cancelFunc()
 }
