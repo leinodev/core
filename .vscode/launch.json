@@ -9,7 +9,16 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/main.go"
+            "program": "${workspaceFolder}/main.go",
+            "env": {
+                "APP_INSTANCE": "dev-build-local",
+
+                "DB_DSN": "dbdsn",
+
+                "REDIS_HOSTNAME": "rhost",
+                "REDIS_PASSWORD": "rpass",
+                "REDIS_DBNUM": "123",
+            }
         }
     ]
 }
